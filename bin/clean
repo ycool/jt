@@ -1,0 +1,9 @@
+#! /bin/bash
+
+set -x 
+
+rm -f *~ \#*
+find -name "*.orig" | xargs rm  2>/dev/null
+find -name "*.rej" | xargs rm   2>/dev/null
+find -name "*~" | xargs rm   2>/dev/null
+

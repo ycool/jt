@@ -1,0 +1,171 @@
+(load-file "/home/build/public/eng/elisp/google.el")
+
+(load-file "/google/src/head/depot/google3/tools/gsearch/contrib/cs.el")
+
+
+(setq p4-use-p4config-exclusively t)
+
+;; Red Hat Linux default .emacs initialization file  ; -*- mode: emacs-lisp -*-
+
+;; Set up the keyboard so the delete key on both the regular keyboard
+;; and the keypad delete the character under the cursor and to the right
+;; under X, instead of the default, backspace behavior.
+(global-set-key [delete] 'delete-char)
+(global-set-key [kp-delete] 'delete-char)
+
+;; turn on font-lock mode
+(global-font-lock-mode t)
+;; enable visual feedback on selections
+(setq-default transient-mark-mode t)
+
+;; always end a file with a newline
+(setq require-final-newline t)
+
+;; stop at the end of the file, not just add lines
+(setq next-line-add-newlines nil)
+
+(when window-system
+  ;; enable wheelmouse support by default
+  (mwheel-install)
+  ;; use extended compound-text coding for X clipboard
+  (set-selection-coding-system 'compound-text-with-extensions))
+
+(require 'sawzall)
+(setq auto-mode-alist
+(cons '("\\.szl$" . sawzall-mode) auto-mode-alist))
+
+;; show column number
+(setq column-number-mode t)
+
+; ********************* sawzall mode  ********************************
+(require 'sawzall)
+(setq auto-mode-alist
+     (cons '("\\.szl$" . sawzall-mode) auto-mode-alist))
+
+;; (custom-set-variables
+;;   ;; custom-set-variables was added by Custom.
+;;   ;; If you edit it by hand, you could mess it up, so be careful.
+;;   ;; Your init file should contain only one such instance.
+;;   ;; If there is more than one, they won't work right.
+;;  '(inhibit-startup-screen t))
+;; (custom-set-faces
+;;   ;; custom-set-faces was added by Custom.
+;;   ;; If you edit it by hand, you could mess it up, so be careful.
+;;   ;; Your init file should contain only one such instance.
+;;   ;; If there is more than one, they won't work right.
+;;  '(default ((t (:stipple nil :background "black" :foreground "gray" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 123 :width normal :family "urw-nimbus mono l")))))
+
+;;(load "~/ess/ess-5.3.11/lisp/ess-site")
+
+(require 'googlemenu)
+(require 'p4-google)                ;; g4-annotate, improves find-file-at-point
+(require 'compilation-colorization) ;; colorizes output of (i)grep
+(require 'rotate-clients)           ;; google-rotate-client
+(require 'rotate-among-files)       ;; google-rotate-among-files
+(require 'googlemenu)               ;; handy Google menu bar
+(require 'p4-files)                 ;; transparent support for Perforce filesystem
+(require 'google3)                  ;; magically set paths for compiling google3 code
+(require 'csearch)                  ;; Search the whole Google code base.
+
+
+;; Find file at point!!!
+(require 'google3-ffap)
+(setq ffap-alist (append
+           (google3-ffap-alist-additions)
+           '((sawzall-mode . google3-ffap-c-mode))
+           ffap-alist))
+;; (global-set-key [f6] 'ffap)
+
+;; For auto indent
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+;; key %
+(global-set-key "%" 'match-paren)
+(defun match-paren (arg)
+  "Go to the matching paren if on a paren; otherwise insert %."
+  (interactive "p")
+  (let ((prev-char (char-to-string (preceding-char)))
+        (next-char (char-to-string (following-char))))
+    (cond ((string-match "[[{(<]" next-char) (forward-sexp 1))
+          ((string-match "[\]})>]" prev-char) (backward-sexp 1))
+          (t (self-insert-command (or arg 1))))))
+
+;; parenthesis
+(setq show-paren-delay 0)           ; how long to wait?
+(show-paren-mode t)                 ; turn paren-mode on
+(setq show-paren-style 'parenthesis) ; alternatives are 'parenthesis' and 'mixed' and 'expression'
+
+(setq google-decipher-proto-files t)
+
+; hot key for browsing
+; enabled by gtags (http://www.corp.google.com/eng/howto/tools/gtags.html)
+(global-set-key [f2] 'google-show-tag-locations-under-point)
+(global-set-key [f3] 'google-pop-tag)
+(global-set-key [f4] 'google-show-callers)
+(global-set-key [f5] 'google-show-tag-locations-regexp)
+; set a key to search based on filename
+(define-key global-map [f6] 'google-rotate-among-files)
+(global-set-key [f7] 'google-imports-add-import-from-tag)
+(global-set-key [f8] 'g4-edit-open-asynchronously)
+
+(global-set-key [(control \l)] nil)
+(global-set-key [(control \l) (b)] 'google3-build)
+(global-set-key [(control \l) (d)] 'google3-require-deps)
+(global-set-key [(control \l) (t)] 'google3-test)
+(global-set-key [(control \l) (r)] 'google3-run)
+(global-set-key [(control \l) (a)] 'g4-add)
+(global-set-key [(control \l) (e)] 'g4-edit-open-asynchronously)
+(global-set-key [(control \l) (q)] 'query-replace-regexp)
+
+(global-set-key "\C-cl"  'google-lint)   ; bind lint to control-c + l
+(global-set-key [M-down]    'next-error)
+(global-set-key [M-up]      '(lambda () (interactive) (next-error -1)))
+
+(global-set-key "\C-l" 'goto-line)
+(global-set-key "\C-q" 'move-beginning-of-line)
+(define-key global-map [(control meta r)] 'google-rotate-among-files)
+
+(require 'color-theme)
+(setq color-theme-is-global t)
+(color-theme-initialize)
+(if window-system
+    (color-theme-deep-blue)   ;; Emacs in own window
+  (color-theme-dark-laptop) ;; Emacs in tty
+  )
+
+;  (color-theme-pok-wob) ;; Emacs in tty
+;   (color-theme-dark-laptop) ;; Emacs in tty
+
+;;      (color-theme-lethe) ;; Emacs in tty
+
+;; Turn on red highlighting for characters outside of the 80/100 char limit
+(add-hook 'c++-mode-hook
+          '(lambda () (font-lock-set-up-width-warning 80)))
+(add-hook 'java-mode-hook
+          '(lambda () (font-lock-set-up-width-warning 100)))
+(add-hook 'python-mode-hook
+          '(lambda () (font-lock-set-up-width-warning 80)))
+(add-hook 'protobuf-mode-hook
+          '(lambda () (font-lock-set-up-width-warning 80)))
+
+(global-set-key "\C-cg"  'autogen)   ; bind autogen to control-c + g
+(add-hook 'find-file-not-found-hooks 'autogen)
+
+;; Defined genbash to produce GBash boilerplate.
+(load-file "/home/build/google3/util/shell/gbash/tools/emacs/genbash.el")
+
+(server-start)
+
+(require 'google-imports)
+
+(put 'scroll-left 'disabled nil)
+
+; https://sites.google.com/a/google.com/llvm/clang-tools/clang-format
+(load "/google/src/head/depot/eng/elisp/google-cc-extras.el")
+(load "/usr/lib/clang-format/clang-format.el")
+(global-set-key [C-M-tab] 'clang-format-region)
+(add-hook 'c-mode-common-hook (function (lambda () (local-set-key (kbd "TAB") 'clang-format-region))))
+
+; need test
+; (global-visual-line-mode 1)
+(add-hook 'write-file-hooks 'delete-trailing-whitespace)

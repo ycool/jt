@@ -1,0 +1,101 @@
+#! /bin/bash
+# set -x
+
+# m
+# cs
+
+E=$1
+S=/home/jthu/bin/scripts
+
+if [ $# -lt 1 ] ; then
+  E='syns'  # default
+fi
+
+echo "Setup $E env."
+
+if [ $E = 'cs' ]; then
+  for f in r.cs r.cs.borgmon r.cs.canary r.cs.fire r.cs.gdb r.cs.key r.cs.load r.cs.perf r.cs.perf.prod r.cs.run.local r.cs.fe_be b.cs t.cs 
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+elif [ $E = 'm' ]; then # admixer
+  for f in r.m r.m.canary r.m.drill r.m.eval r.m.exp r.m.fire r.m.load r.m.load.prod r.m.my r.m.perf r.m.perf.prod r.m.regtest b.m t.m r.m.borgmon
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+elif [ $E = 'amfe' ]; then
+  for f in r.amfe r.amfe.canary r.amfe.fire r.amfe.load r.amfe.my 
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+elif [ $E = 'astra' ]; then
+  for f in r.astra r.astra.index r.astra.index.prod r.astra.load r.astra.mustang r.astra.mustang.prod r.astra.my r.astra.perf r.astra.perf.prod r.astra.pipeline b.astra b.astra.pipeline t.astra r.astra.canary r.astra.fire r.astra.borgmon
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+elif [ $E = 'charon' ]; then
+  for f in r.charon r.charon.migration r.charon.yh
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+elif [ $E = 'cl' ]; then
+  for f in r.cl r.cl.canary r.cl.load r.cl.perf r.cl.fire
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+elif [ $E = 'creative' ]; then
+  for f in r.creative r.creative.my r.creative.load r.creative.perf r.creative.perf.prod r.creative.canary
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+elif [ $E = 'impression' ]; then
+  for f in b.impression r.impression
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+elif [ $E = 'qrewrite' ]; then # ads qrewrite
+  for f in  r.qrewrite.load r.qrewrite.canary
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+elif [ $E = 'qr' ]; then # web qrewrite
+  for f in  r.qr
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+elif [ $E = 'release' ]; then
+  for f in b.release r.release t.release
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+elif [ $E = 'jthu' ]; then
+  for f in .emacs .bashrc .gitconfig .git5rc .dremelrc .ssh .blazerc .bash_aliases
+  do
+    echo "copy $f ..."
+    ln -s -f /home/jthu/$f ~/
+  done
+  for f in bin doc data www
+  do
+    echo "Link $f ..."
+    ln -sf /home/jthu/$f ~
+  done
+  ln -s /home/build/google3 ~/x
+elif [ $E = 'syns' ]; then # default
+  for f in r.syns b.syns t.syns r.syns.build r.syns.debug r.syns.train r.syns.common
+  do
+    echo "Link $f ..."
+    ln -sf $S/$f .
+  done
+  ln -sf r.syns.train r
+fi

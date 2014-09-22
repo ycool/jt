@@ -1,0 +1,61 @@
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+export EDITOR='emacs'
+
+export P4CONFIG=.p4config
+export P4MERGE=/home/build/public/eng/perforce/mergep4.tcl
+export P4EDITOR=vim
+# export P4DIFF='/google/src/files/head/depot/google3/devtools/scripts/p4diff -w'
+export P4DIFF='/usr/bin/diff -u'
+
+# # For new LOAS setup ...
+/usr/bin/runloas  # or call /usr/bin/setup-corp-loasd.sh
+
+# # To check logs access
+# alias report="/home/build/static/projects/logs/accesstools/report"
+# alias szl=/home/build/static/projects/logs/szl
+# alias saw=/home/build/static/projects/logs/saw
+# alias milldump=/home/build/static/projects/logs/milldump
+
+# export GIT_CEILING_DIRECTORIES=/home
+export PS1="\D{%Y-%m-%d} \t - ${debian_chroot:+($debian_chroot)}\u@\h: \w\n\$ "
+
+# # enable programmable completion features (you don't need to enable
+# # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# # sources /etc/bash.bashrc).
+
+# enable programmable completion features
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+  . /etc/bash_completion
+fi
+
+if [ -f /etc/bash_completion.d/git ]; then
+  source /etc/bash_completion.d/git
+fi
+
+# # Google Query Interface
+. /etc/bash_completion.d/gqui
+
+source /home/jthu/.bash_aliases
+
+# for nfs access
+# kinit
+
+# export ASAN_BLAZE="--crosstool_top=//third_party/llvm/crosstool/unstable --compiler=clang-llvm-asan --custom_malloc=//testing/asan:allocator --copt=-g2 --copt=-fno-omit-frame-pointer "
+
+# Manage history
+export PROMPT_COMMAND='history -a; history -n'
+export HISTCONTROL=ignoreboth
+export HISTSIZE=1000000000
+export HISTFILESIZE=1000000
+export HISTTIMEFORMAT="%F %T "
+# # set cmdhist
+export HISTIGNORE="&:ls:[bf]g:exit"
+# shopt -s histappend
+
+# fileutil auto complete
+# need test
+#complete -o nospace -C 'G_COMP_WORDBREAKS="${COMP_WORDBREAKS}" GQUI_CLI_FILEUTIL_MODE=1 GQUI_CLI_SOCKET=~/.gqui/fileutil-tab /usr/bin/cli-client-gqui COMPLETE' fileutil fu fl

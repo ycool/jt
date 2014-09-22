@@ -1,0 +1,220 @@
+alias sport='ssh sport.i'
+alias rivet='ssh rainbow.mtv.corp.google.com'
+alias dud='du -h --max-depth=1 .'
+alias refresh='source /home/jthu/.bash_aliases; '
+# source /etc/bash_completion; chmod a+rx ~/www/ -R'
+alias ll='ls -l --color -h '
+alias lh='ls -l -h --color '
+alias aa='ssh passion.mtv.corp.google.com'
+alias c='cd; clear'
+
+alias adsdbs='/home/build/static/projects/ads/nonconf/sql.par reports'
+# alias adsdbs="/google/data/ro/projects/production/mysql/python/sql.par mystubby:/bns/local/slave/ads/db/b/shard#/besteffort::pfile=/home/jthu/.dbpw-readonly-jthu:ads#" # for all shards
+alias adsdb="/google/data/ro/projects/production/mysql/python/sql.par mystubby:/bns/local/slave/ads/db/b/shard0/besteffort::pfile=/home/jthu/.dbpw-readonly-jthu:ads0" # for all shards
+# alias adsdb="/home/build/static/projects/ads/nonconf/sql.par mystubby:/bns/global/ads/database/mystubby/db-reports.shard-0:::ads0"
+alias adsdbd="/home/build/static/projects/ads/nonconf/sql.par mystubby:/bns/global/ads/database/mystubby/db-devel-west.shard-0:root:adsgoogle:ads0"
+alias adsdb_east='/home/build/static/projects/ads/nonconf/sql.par mystubby:/bns/global/ads/database/mystubby/db-devel-east.shard-#:root::ads#'
+alias adsdb_west='/home/build/static/projects/ads/nonconf/sql.par mystubby:/bns/global/ads/database/mystubby/db-devel-west.shard-#:root::ads#'
+
+# alias adst1="g4 p | grep 'Change ' | grep ':'  | cut -d: -f1 | cut -d' ' -f2 | xargs tap_presubmit -p ads_core_serving  --experimental_hip --email -c "
+
+alias synst1="g4 p | grep 'Change ' | grep ':'  | cut -d: -f1 | cut -d' ' -f2 | xargs tap_presubmit -p synonyms,qrewrite --email -c "
+
+alias adst1="tap_test -p ads_core_serving  --experimental_hip --email -c "
+alias adst2="tap_test -p ads_metatests  --experimental_hip --email -c "
+alias adst3="tap_test -p ads_evenflow.statsloop --experimental_hip --email -c "
+alias adsg1="/google/src/files/head/depot/google3/ads/testing/tools/forge_new_goldens.py --tests=tas_serving --use_rabbit" # no statsloop test which fails all the time.
+alias adsdm='ssh 0.test_ads.admixer.jthu.yn.borg'
+alias adserv_my_admixer_restart='blaze build -c opt ads/mixer/server:ad-mixer && /home/build/google3/ads/production/adserving.sh -d yn -mixer_only -v admixer_binary=\"$(pwd)/blaze-bin/ads/mixer/server/ad-mixer\" -restart test_ads.admixer'
+
+alias blaze_debug='blaze test -c dbg --run_under="//testing/valgrind:memcheck --track-origins=yes" --test_timeout=3600 ' # ads/tables:audience-targeting_test
+alias blaze_debug2='blaze test -c dbg --run_under="//testing/valgrind:tsan " --test_timeout=3600 ' # ads/tables:audience-targeting_test
+
+# to find which cell is doing experiment canary.
+alias exp_canary='/home/build/static/projects/ads/experiments/lookup_canary_datacenter.par'
+# to find/modify an exp status
+alias exp_xrampup='/google/data/ro/projects/ads/experiments/ad_ersoh.par '
+# exp_amendel show experiment 118073
+alias exp_amendel='ads_mendel_client.sh'
+
+# for regtest, it uses test key.
+alias cs_decode_test='/home/jthu/bin/test-clickencode  --clickstring_crypter_key_path=/home/build/google3/ads/clickencoding/testdata decode ' # "&ai=xxx"
+# to decode prod clickstring. the parameter is ai string
+alias cs_decode='/home/jthu/bin/test-clickencode  decode ' # "&ai=xxx"
+alias cs_sign_test='/home/jthu/bin/sign_url --clickserver_keys=/home/build/google3/ads/clickserver/frontend/testdata/ ' # --url "/aclk?"
+alias cs_sign='/home/jthu/bin/sign_url --clickserver_keys=/home/jthu/data/clickserver/keys/aclk_redirector/ '
+#cs_sign --url="/pagead/aclk?sa=L&ai=CWnYBUq65TuqHO-HI2wXy-LHbDeaIvKwCzpamySL3qY-SAwgAEAEgx5j4BVCx__f4BmDN8O6ArAOgAYr5mvoDyAEBqQLHUEE2lUujPqoEGE_Q_njvCUMK-8HDuUUqwrmFdiacxsrG44AFkE66BRMI2fbjoYyorAIVw35MCh3XD3mMygUA&ei=Uq65TtmFOcP9sQLXn-TjCA&ved=0CBIQ0Qw&val=ChAzYWU5Mzc1NjA5NGZlNTgwEO_T5vUEGgjjeBc9QyZ6lCABKAAwzfDFgvOihbwYOO_T5vUEQO_T5vUE&sig=AOD64_3VYetRRbMY1RbKUdd_b_3JHjXseQ&adurl=http://www.americanas.com.br%3Fepar%3Dgooglegrupobranding%26WT.srch%3D1%26opn%3DYZMEZQ%26WT.mc%3DClick "
+alias cs_hash='/home/jthu/bin/desturl_hash ' # --url='dest_url'
+alias cl_decode='~/bin/decode_conversion_label --label ' # decode conversion label
+
+# h2keyword
+alias k_shard='/home/jthu/bin/lookup-adkeyword-shard ' # keyword_text
+
+alias gaia_lookup='/home/build/static/projects/gaia/gaiaclient/GaiaClient.par --gaia_instance=prod LookupUserByEmail ' # jthu@google.com
+
+alias bb="blaze build --python_cpu=k8 "
+alias rb="rabbit build --python_cpu=k8 "
+# generate build analyze dependency rules
+alias bbc="blaze coverage "
+alias bbt="blaze test "
+alias rt="rabbit test "
+alias bbta='blaze test --config=asan ' # testing/asan:small_oob_test
+alias bbf='buildifier -a -v ' # "buildifier --mode=fix "
+alias bbda="blaze analyze "
+alias bbdf="fixdeps_main.par "  # target_name   # fix dependency
+alias bbdn="fixdeps_main.par --new_rules " # filename
+
+alias btest="blaze test --test_output=all --color=auto --curses=auto --forge --embed_changelist=none"
+alias bns="lockserv resolve " # /bns/mh/borg/mh/bns/ads-features/exportserver/0 # to resove bns name
+alias ls='ls'
+alias fu='fileutil ' # 'fileutil --enable_chubby_support'
+alias fl='fileutil ls -l -h -sharded ' # 'fileutil --enable_chubby_support'
+alias fs='fileutil ls -sharded '
+
+alias emacs='emacs -nw'
+alias emacsclient='emacsclient -t'
+alias em='emacsclient'
+alias mydb="/usr/local/google/mysql_mpm/rpm-contents/usr/bin/mysql -uroot -padsgoogle -S /usr/local/google/mysql_data/mysql.sock --database=testads0"
+
+alias sql="/home/build/static/projects/ads/nonconf/sql.par --noshow_replication_lag reports"
+alias sql_devel="/home/build/static/projects/ads/nonconf/sql.par --noshow_replication_lag --noreplace_user_readonly devel"
+alias sql_searchmetrics='mysql -ureadonly -preadonly -hyavinfour.mtv.corp.google.com -P3307 -S /usr/local/google/mysql_data/mysql.sock searchmetrics'
+#alias sql_devel_east="/home/build/static/projects/ads/nonconf/sql.par --noshow_replication_lag --noreplace_user_readonly devel-east"
+alias sql_devel_east="/home/build/static/projects/ads/nonconf/sql.par devel-east"
+alias sql_devel_replica="/home/build/static/projects/ads/nonconf/sql.par --noshow_replication_lag --noreplace_user_readonly db#-devel-replica.adz:readonly::ads#"
+alias sql_rasta='mysql -A -hfe-session-backup -ureadonly -preadonly rasta'
+alias sql_testads0='mysql -hlocalhost -uroot -padsgoogle -S/usr/local/google/mysql_data/mysql.sock testads0'
+alias sql_testads1='mysql -hlocalhost -uroot -padsgoogle -S/usr/local/google/mysql_data/mysql.sock testads1'
+alias sql_foo='/usr/local/google/mysql_mpm/rpm-contents/usr/bin/mysql -uroot -padsgoogle -S /usr/local/google/mysql_data/mysql.sock'
+
+# phrase 1
+alias g4c1='/home/build/google3/devtools/maintenance/include_what_you_use/iwyu.py --checkout_command="g4 edit" ' # ads/mixer/server/travel/
+# phrase 2
+# alias iwyu='/home/build/google3/devtools/maintenance/include_what_you_use/iwyu.py --comments --nosafe_headers ' # ads/mixer/server/travel/
+alias iwyu='/home/build/google3/devtools/maintenance/include_what_you_use/iwyu.py --nosafe_headers ' # ads/mixer/server/travel/
+
+alias logc='/home/build/static/projects/logs/accesstools/report -u ' # check log access adsbe-log-processing
+# alias log_sucker='log_sucker.par --cell=ea --job=adsw.adgroup.shard-9 --borg_user=ads-backend --tasks="14" --pattern=adgroup-server.ERROR*'
+alias prodaccess='prodaccess --ssh_cert'
+alias psnapshot='/home/build/google3/ads/dynamo/tools/printmessages.sh ' # to print snapshot file
+# source /home/jthu/.ssh/agent.passion.mtv.corp.google.com
+# ssh ads-backend@admixer-server
+
+alias test_schema_change='/home/build/nonconf/google3/ads/frontend/tools/pebl/pebl_tests && blaze test ads/db/create:schema_tests && blaze build ads/testing:tas_server ads/db/create:verifySchemaChange && ./blaze-bin/ads/db/create/verifySchemaChange && ./blaze-bin/ads/testing/tas_server'
+
+# ic max qps: 4700
+alias loadtest_reset_ic='borgcfg --borguser=ads-testbed /home/build/google3/production/borg/ads_backend/ic/adsl-serving.borg reload adsl.adkeyword* adsl.adgroup* adsl.adcampaign adsl.admixer'
+alias loadtest_reload_admixer_ic='borgcfg --borguser=ads-testbed production/borg/ads_backend/ic/adsl-serving.borg --vars=admixer_binary=\"`pwd`/blaze-bin/ads/mixer/server/ad-mixer\" reload adsl.admixer'
+alias loadtest_start_loadtester_ic='borgcfg --borguser=ads-testbed /home/build/google3/production/borg/ads_backend/ic/adsl-loadtest.borg up loadtest_northamerica.*'
+alias loadtest_start_ic='/google/data/ro/projects/ads/production/adservers.par --borg_user=ads-testbed setqps 4000 l_na l.ic'
+alias loadtest_stop_ic='/home/build/static/projects/ads/tools/adservers.par --borg_user=ads-testbed setqps 0 l_na l.ic'
+
+# for newton, still needed ?
+# borgcfg --vars target_port=admixernewton --borguser=ads-testbed /home/build/google3/production/borg/ads_backend/${DC}/adsl-loadtest.borg reload loadtest_northamerica.loadtester
+
+alias mendel1='/home/build/static/projects/ads/experiments/ads_mendel_client.par update -c ' # cl_number
+
+
+alias loadtest_reload_adkeyword_ic='borgcfg --borguser=ads-testbed production/borg/ads_backend/ic/adsl-serving.borg reload adsl.adkeyword*'
+
+# for regtest
+alias reg_cls='/home/jthu/bin/generate-changelog.sh '
+
+alias g5='/home/build/static/projects/shelltoys/g5.sar'
+alias gl='BR=$(git branch | grep "*" | cut -f2 -d" "); export PS1="\u@\h: \w ($BR)\n$ "; source /home/jthu/.bash_aliases'
+alias g4l='BR=$(pwd | sed "s|/google/src/cloud/jthu/||" | sed "s|/google3||"); export PS1="\u@\h: \w ($BR)\n$ "; source /home/jthu/.bash_aliases'
+alias n='cd /home/jthu/'  # nfs
+alias n1='cd /home/jthu/clients/git/google3'  # click
+alias n2='cd /home/jthu/clients/git2/google3' # amfe
+alias n3='cd /home/jthu/clients/git3/google3' # astra
+alias n4='cd /home/jthu/clients/git4/google3' # shard
+alias n5='cd /home/jthu/clients/git5/google3' #
+alias n6='cd /home/jthu/clients/git6/google3' # admixer
+
+# alias git5t1='git5 export --submit-queue  --tap_options=use-hip,email,detach --tap_project=ads_core_serving'
+alias cat2t1='/home/build/google3/contentads/testing/submitq/cat2-submit-queue.sh --email -c '
+alias gitin='git ci -m "hehe"; git5 export'
+alias git_head='git reset --hard HEAD'  # throw away un-committed mistakes
+alias git_reset='git reset --hard HEAD^' # throw away previous commit
+alias git5t1='git5 export --submit-queue --tap_options=email,detach --tap_project=ads_core_serving,ads_metatests '
+alias git5t2='git5 export --submit-queue --tap_options=email,detach --tap_project=ads_core_serving,ads_clickserver'
+alias git5t3='git5 export --submit-queue --tap_options=email,detach --tap_project=ads_experiment_config '
+alias git5t9='git5 export --submit-queue --tap_options=email,detach --tap_project=ads_core_serving,ads_clickserver,ads_hopscotch,gws,kansas.binaries '
+
+alias git5t_bow='git5 export --submit-queue --tap_project=cafe.bow --tap_options=use-hip,email,detach'
+git5_exp() {
+ git5 export  # Safe to do always, and you *must* do this the first time.
+ /google/data/ro/projects/ads/experiments/ads_mendel_client.sh resync
+ git commit -a -m "Resynced."
+ git5 export
+}
+# ads_mendel_client.par resync -c $(git5 info --format='%(review_cl)s')
+#    "ads_mendel_client.par sync -c $(git5 info --format='%(review_cl)s')"
+
+# alias c1='/home/jthu/bin/cpp_clean.sh ' # blaze build target, e.g. ads/mixer/server:ad-mixer
+
+alias testf1='/google/data/ro/projects/flaky-test-fixit/find_flaky_tap_tests --days=7 ads_core_serving'
+
+alias dremel='/home/build/static/projects/dremel/dremel --modules /home/anuragag/bin/dremel_udf.lua,/home/build/google3/gws/tools/dremel/gws.lua'
+alias dremelg='/home/build/static/projects/dremel/dremel --output=line_graph --graph_size=500x300' # to draw a graph
+alias histo='sort|uniq -c |sort -gr'
+
+export ASTRA_BT='/bigtable/mix-ag/dynamo-dev.dev.aswanrepository'
+export ASWAN_BT='/bigtable/mix-oa/ads-aswan.aswan-prod.document'
+export ADS_CRAWL_BT='/bigtable/mix-ye/ads-crawl.adgroup-criteria-features'
+alias bts='bt scan --scanrowcount=3 --scanversions=1 '
+# key is the url
+alias aswan_decode='/home/jthu/bin/urlcheck --verbose=3 ' # "http://www.davidyurman.com/shoponline/subcategory.aspx?folderId=/women/bracelets"
+
+alias f1ch='/home/build/static/projects/nonconf/storage/f1/tools/f1_get_changehistory.par --server=/f1/ads/prod'
+
+# borg quota
+alias borgq='borgquota print -g '
+
+
+# print PhraseInfo cns file
+alias ppi='codex --sstable='%s:%zl{%P{PhraseInfo}}' '
+
+# to use security key.
+alias p='prodaccess -g'
+
+# common env
+export B='/google/data/rw/projects/users/jthu'
+export D2='/namespace/synonyms/dev/jthu'
+export D='/cns/ij-q-d/home/jthu/'
+export L='/google/data/rw/projects/users/jthu/'
+
+# flat rules
+export P='/namespace/synonyms/rules/'
+# phrase info / subphrase info
+export P2='/namespace/synonyms/prod/'
+# syns ranklab data
+export R='/namespace/synonyms/dev/ranklab/'
+# lastest training data
+export F="/cns/ij-d/home/yongjik/ranklab/flatfiles/same_as_prod.0407A"
+
+alias bu2='~/x/experimental/jthu/syns/bu/evalexp.sh --label=myexp'
+
+# syns training data
+alias irl='iranklab --flatfiles_dir=$F'
+
+# print flatfiles
+alias pf='print_flatfile '
+# remove flatfile cache
+alias rfc='rm -r -f /usr/local/google/ranklab_cache/cns '
+
+export PATH=".:$PATH:/home/jthu/bin:/home/jthu/bin/links:~/local_bin:./experimental/jthu/bin/:$L"
+export BUG=9465343
+
+alias g4t1='g4 p | head -n 1 | sed 's/:.*//' | sed 's/.*Change//' | xargs tap_test -p synonyms --email --detach -c '
+alias g4s='g4 p | head -n 1 | sed 's/:.*//' | sed 's/.*Change//'  | xargs g4 submit -c '
+alias g4c='citctools cleanup '
+alias g4r='g4 nothave | xargs rm' # remove nothave files to create a clean client
+
+# alias g4m="C=$(g4 p | head -n 1 | sed 's/:.*//' | sed 's/.*Change//'); g4 mail -b $BUG -c $C "
+
+# build superroot and restart serving stack.
+alias srb='mini reload production/borg/mustang/experiments/ij-q-experiment.borg --vars=build_sr=true'
+alias srr="borgcfg production/borg/mustang/experiments/ij-q-experiment.borg reload --vars=ascorer_binary=`pwd`/blaze-bin/mustang/servlets/ascorer/ms-ascorer,build_sr=true,ds_binary=`pwd`/blaze-bin/teragoogle/experimental/docservlet/docservlet-exp,sr_binary=`pwd`/blaze-bin/superroot/servers/sr_www --borguser=jthu --deadline=120 --skip_confirmation"
+
+alias qrb='rabbit build -c opt quality/qrewrite:qrewrite'
